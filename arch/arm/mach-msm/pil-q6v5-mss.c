@@ -46,6 +46,8 @@
 #define MAX_SSR_REASON_LEN	81U
 #define STOP_ACK_TIMEOUT_MS	1000
 
+bool ignore_errors_by_subsys_modem_restart = false;
+
 struct modem_data {
 	struct mba_data *mba;
 	struct q6v5_data *q6;
