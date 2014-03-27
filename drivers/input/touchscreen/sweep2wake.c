@@ -29,6 +29,7 @@
 #include <linux/slab.h>
 #include <linux/workqueue.h>
 #include <linux/lcd_notify.h>
+#include <linux/input.h>
 
 /* uncomment since no touchscreen defines android touch, do that here */
 //#define ANDROID_TOUCH_DECLARED
