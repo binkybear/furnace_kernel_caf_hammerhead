@@ -1677,7 +1677,7 @@ static int lcd_notifier_callback(struct notifier_block *this,
 	bool prevent_sleep = false;
 #endif
 #if defined(CONFIG_TOUCHSCREEN_SWEEP2WAKE)
-	prevent_sleep = (s2w_switch > 0) && (s2w_s2sonly == 0);
+	prevent_sleep = (s2w_switch > 0);
 #endif
 #if defined(CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE)
 	prevent_sleep = prevent_sleep || (dt2w_switch > 0);
@@ -1860,7 +1860,7 @@ static int synaptics_ts_probe(
 
 	ret = request_threaded_irq(client->irq, NULL, touch_irq_handler,
 #ifdef CONFIG_TOUCHSCREEN_PREVENT_SLEEP
-			IRQF_TRIGGER_FALLING | IRQF_ONESHOT | IRQF_NO_SUSPEND, client->name, ts);
+			IRQF_TRIGGER_FALLING | IRQF_ONESHOT, client->name, ts);
 #else
 			IRQF_TRIGGER_FALLING | IRQF_ONESHOT, client->name, ts);
 #endif
