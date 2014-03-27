@@ -989,7 +989,7 @@ static void bq24192_external_power_changed(struct power_supply *psy)
 		bq24192_set_input_vin_limit(chip, chip->vin_limit_mv);
 
 #ifdef CONFIG_FORCE_FAST_CHARGE
-		if (force_fast_charge)
+		if (FC_ENABLED)
 			bq24192_set_input_i_limit(chip, USB_FASTCHG_LOAD);
 		else
 			bq24192_set_input_i_limit(chip, ret.intval / 1000);
@@ -998,7 +998,7 @@ static void bq24192_external_power_changed(struct power_supply *psy)
 #endif
 		bq24192_set_ibat_max(chip, USB_MAX_IBAT_MA);
 #ifdef CONFIG_FORCE_FAST_CHARGE
-		if (force_fast_charge)
+		if (FC_ENABLED)
 			pr_info("usb is online and fast charge enabled! i_limit = %d v_limit = %d\n",
 					USB_FASTCHG_LOAD, chip->vin_limit_mv);
 		else

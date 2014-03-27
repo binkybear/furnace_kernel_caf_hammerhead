@@ -26,15 +26,14 @@
 #include <linux/fastchg.h>
 #include <linux/string.h>
 
-int force_fast_charge = 0;
 static int __init get_fastcharge_opt(char *ffc)
 {
 	if (strcmp(ffc, "0") == 0) {
-		force_fast_charge = 0;
+		FC_ENABLED = 0;
 	} else if (strcmp(ffc, "1") == 0) {
-		force_fast_charge = 1;
+		FC_ENABLED = 1;
 	} else {
-		force_fast_charge = 0;
+		FC_ENABLED = 0;
 	}
 	return 1;
 }
@@ -44,21 +43,21 @@ __setup("ffc=", get_fastcharge_opt);
 static ssize_t force_fast_charge_show(struct kobject *kobj, struct kobj_attribute *attr, char *buf)
 {
 	size_t count = 0;
-	count += sprintf(buf, "%d\n", force_fast_charge);
+	count += sprintf(buf, "%d\n", FC_ENABLED);
 	return count;
 }
 
 static ssize_t force_fast_charge_store(struct kobject *kobj, struct kobj_attribute *attr, const char *buf, size_t count)
 {
 	if (buf[0] >= '0' && buf[0] <= '1' && buf[1] == '\n')
-                if (force_fast_charge != buf[0] - '0')
-		        force_fast_charge = buf[0] - '0';
+                if (FC_ENABLED != buf[0] - '0')
+		        FC_ENABLED = buf[0] - '0';
 
 	return count;
 }
 
 static struct kobj_attribute force_fast_charge_attribute =
-__ATTR(force_fast_charge, 0666, force_fast_charge_show, force_fast_charge_store);
+__ATTR(FC_ENABLED, 0666, force_fast_charge_show, force_fast_charge_store);
 
 static struct attribute *force_fast_charge_attrs[] = {
 &force_fast_charge_attribute.attr,
@@ -76,7 +75,7 @@ int force_fast_charge_init(void)
 {
 	int force_fast_charge_retval;
 
-//	force_fast_charge = FAST_CHARGE_DISABLED; /* Forced fast charge disabled by default */
+//	FC_ENABLED = FAST_CHARGE_DISABLED; /* Forced fast charge disabled by default */
 
 	force_fast_charge_kobj = kobject_create_and_add("fast_charge", kernel_kobj);
 	if (!force_fast_charge_kobj) {
