@@ -28,7 +28,7 @@
 
 extern struct snd_soc_codec *fauxsound_codec_ptr;
 
-static int snd_ctrl_locked = 0;
+static int snd_ctrl_locked = 1;
 
 unsigned int taiko_read(struct snd_soc_codec *codec, unsigned int reg);
 int taiko_write(struct snd_soc_codec *codec, unsigned int reg,
