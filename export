@@ -18,7 +18,7 @@ ps=2048
 base=0x00000000
 ramdisk_offset=0x02900000
 tags_offset=0x02700000
-cmdline="console=ttyHSL0,115200,n8 androidboot.hardware=hammerhead user_debug=31 maxcpus=4 msm_watchdog_v2.enable=1 gamma=stock kcal_r=255 kcal_g=255 kcal_b=255"
+cmdline="console=ttyHSL0,115200,n8 androidboot.hardware=hammerhead user_debug=31 maxcpus=4 msm_watchdog_v2.enable=1"
 
 rm -rf out
 mkdir out
@@ -55,7 +55,7 @@ if [ -f ozip/boot.img ]; then
 fi
 echo "Extracting files..."
 if [ -f arch/arm/boot/"$kerneltype" ]; then
-	cp arch/arm/boot/"$kerneltype" out
+	cp arch/arm/boot/"$kerneltype" ozip/boot/
 	rm -rf ozip/system
 	mkdir -p ozip/system/lib/modules
 	find . -name "*.ko" -exec cp {} ozip/system/lib/modules \;
@@ -99,19 +99,19 @@ fi
 
 echo "Making ramdisk..."
 if [ -d $ramdisk ]; then
-	mkbootfs $ramdisk | gzip > out/ramdisk.gz
+	mkbootfs $ramdisk | gzip > ozip/boot/ramdisk.gz
 else
 	echo "No ramdisk found..."
 	exit 0;
 fi
 
-echo "Making boot.img..."
-if [ -f out/"$kerneltype" ]; then
-	mkbootimg --kernel out/"$kerneltype" --ramdisk out/ramdisk.gz --cmdline "$cmdline" --base $base --pagesize $ps --ramdisk_offset $ramdisk_offset --tags_offset $tags_offset -o ozip/boot.img
-else
-	echo "No $kerneltype found..."
-	exit 0;
-fi
+# echo "Making boot.img..."
+# if [ -f out/"$kerneltype" ]; then
+# 	mkbootimg --kernel out/"$kerneltype" --ramdisk out/ramdisk.gz --cmdline "$cmdline" --base $base --pagesize $ps --ramdisk_offset $ramdisk_offset --tags_offset $tags_offset -o ozip/boot.img
+# else
+# 	echo "No $kerneltype found..."
+# 	exit 0;
+# fi
 
 echo "Zipping..."
 cd ozip
