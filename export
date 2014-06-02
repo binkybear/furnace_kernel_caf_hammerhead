@@ -5,7 +5,7 @@
 # the appropriate lines for dtbTool to compile it, if not prebuilt.
 build=/home/savoca/downloads/furnace/hammerhead/caf
 kernel="furnace"
-version="1.1.4"
+version="1.2.0"
 rom="caf"
 variant="hammerhead"
 ramdisk=ramdisk
@@ -18,7 +18,7 @@ ps=2048
 base=0x00000000
 ramdisk_offset=0x02900000
 tags_offset=0x02700000
-cmdline="console=ttyHSL0,115200,n8 androidboot.hardware=hammerhead user_debug=31 maxcpus=4 msm_watchdog_v2.enable=1"
+cmdline="console=ttyHSL0,115200,n8 androidboot.hardware=hammerhead user_debug=31 maxcpus=4 msm_watchdog_v2.enable=1 gamma=stock kcal_r=255 kcal_g=255 kcal_b=255"
 
 rm -rf out
 mkdir out
