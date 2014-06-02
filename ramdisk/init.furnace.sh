@@ -55,13 +55,9 @@ fi
 if [ -e /sys/devices/platform/kcal_ctrl.0/kcal ]; then
 	if [ -e /sys/module/mdss_dsi/parameters/kcal_profile_r ]; then
 		kcal_r=`cat /sys/module/mdss_dsi/parameters/kcal_profile_r`
-		echo "[furnace debug]: $kcal_r" | tee /dev/kmsg
 		kcal_g=`cat /sys/module/mdss_dsi/parameters/kcal_profile_g`
-		echo "[furnace debug]: $kcal_g" | tee /dev/kmsg
 		kcal_b=`cat /sys/module/mdss_dsi/parameters/kcal_profile_b`
-		echo "[furnace debug]: $kcal_b" | tee /dev/kmsg
 		kcal="$kcal_r $kcal_g $kcal_b"
-		echo "[furnace debug]: $kcal" | tee /dev/kmsg
 		echo "$kcal" > /sys/devices/platform/kcal_ctrl.0/kcal
 		echo "1" > /sys/devices/platform/kcal_ctrl.0/kcal_ctrl
 		echo "[furnace]: RGB KCAL: red=[$kcal_r], green=[$kcal_g], blue=[$kcal_b]" | tee /dev/kmsg
